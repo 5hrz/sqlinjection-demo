@@ -5,11 +5,12 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: injection
     volumes:
       - ./mariadb:/var/lib/mysql
     ports: ["3307:3306"]
   php:
-    image: php:7.4-fpm
+    build: ./php
     volumes:
       - ./nginx/html:/usr/share/nginx/html
       - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini

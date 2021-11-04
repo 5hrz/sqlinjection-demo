@@ -10,23 +10,25 @@
     <?php
         $username = $_POST['username'];
         $password = $_POST['password'];
-        if ( !empty($query) ) {
-            $host = 'localhost';
-            $user = 'root';
-            $password = 'password';
-            $db = 'injection';
-            
-            try {
-                $pdo = new PDO('mysql:charset=UTF8;dbname='.$db. ';host='.$host, $user, $password);
-                $prepare = $pdo->prepare('SELECT * FROM users WHERE user = '. $username. ' AND pass = '. $password. ';');
-                $prepare->execute();
-                $res = $prepare->fetchAll(PDO::FETCH_ASSOC);
-                echo $res
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            }
-
+        $host = 'db';
+        $dbUser = 'root';
+        $dbPass = 'password';
+        $db = 'injection';
+        
+        try {
+            $pdo = new PDO('mysql:charset=UTF8;dbname='.$db. ';host='.$host, $dbUser, $dbPass);
+            $prepare = $pdo->prepare('SELECT * FROM users WHERE user = '.$username.' AND pass = '.$password);
+            $prepare->execute();
+            $res = $prepare->fetchAll();
+            print('username: '.$username.'<br>');
+            print('password: '.$password);
+            print('<pre>');
+            var_dump($res);
+            print('</pre>');
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         }
+
     ?>
 
     <form action="#" method="post">
