@@ -17,11 +17,13 @@
         
         try {
             $pdo = new PDO('mysql:charset=UTF8;dbname='.$db. ';host='.$host, $dbUser, $dbPass);
-            $prepare = $pdo->prepare('SELECT * FROM users WHERE user = '.$username.' AND pass = '.$password);
+            $sql = "SELECT * FROM users WHERE user = '".$username."' AND pass = '".$password."'";
+            $prepare = $pdo->prepare($sql);
             $prepare->execute();
-            $res = $prepare->fetchAll();
+            $res = $prepare->fetchAll(PDO::FETCH_ASSOC);
             print('username: '.$username.'<br>');
-            print('password: '.$password);
+            print('password: '.$password.'<br>');
+            print($sql);
             print('<pre>');
             var_dump($res);
             print('</pre>');
@@ -33,7 +35,7 @@
 
     <form action="#" method="post">
         <input type="text" name="username" value="1">
-        <input type="text" name="password" value="2">
+        <input type="password" name="password" value="2">
         <input type="submit" value="ログイン">
     </form>
 </body>
