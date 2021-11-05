@@ -20,13 +20,21 @@
             $sql = "SELECT * FROM users WHERE user = '".$username."' AND pass = '".$password."'";
             $prepare = $pdo->prepare($sql);
             $prepare->execute();
-            $res = $prepare->fetchAll(PDO::FETCH_ASSOC);
+            $res = $prepare->fetchAll();
+
             print('username: '.$username.'<br>');
             print('password: '.$password.'<br>');
             print($sql);
             print('<pre>');
             var_dump($res);
             print('</pre>');
+
+            if (count($res) > 0) {
+                print('<h1>ログイン成功やったね！！</h1>');
+            }else {
+                print('<h1>ログイン失敗 残念！！</h1>');
+            }
+
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
