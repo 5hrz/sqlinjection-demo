@@ -9,7 +9,7 @@
         
         try {
             $pdo = new PDO('mysql:charset=UTF8;dbname='.$db. ';host='.$host, $dbUser, $dbPass);
-            $sql = "SELECT * FROM users WHERE user = '".$username."' AND pass = '".$password."'";
+            $sql = "SELECT user FROM users WHERE user = '".$username."' AND pass = '".$password."'";
             $prepare = $pdo->prepare($sql);
             $prepare->execute();
             $res = $prepare->fetchAll();
@@ -19,9 +19,10 @@
             // print($sql);
 
             if (count($res) > 0) {
-                print('<h1>ログイン成功やったね！！</h1>');
+                print('<h1>ログイン成功</h1>');
+                print('<p>ようこそ'.$username.'さん</p>');
             }else {
-                print('<h1>ログイン失敗 残念！！</h1>');
+                print('<h1>ログイン失敗</h1>');
             }
             
             print('<button type="button" onclick="history.back()">戻る</button>');
@@ -31,7 +32,7 @@
         }
     }else {
         print(<<<EOS
-        <h1>ログインしてね</h1>
+        <h1>ログイン</h1>
         <form action="#" method="post">
             ユーザー名：
             <input type="text" name="username"><br>
